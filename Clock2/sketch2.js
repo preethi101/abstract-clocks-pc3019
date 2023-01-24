@@ -21,6 +21,7 @@ let mins;
 
 function setup() {
 	createCanvas(900,900);
+	// Creating the images used in this abstract clock
 	myimg=createImg('assets/skyline.jpg');
 	myimg.hide();
 	billboardimg1=createImg('assets/lionking.jpg');
@@ -47,16 +48,24 @@ function setup() {
 	billboardimg11.hide();
 	billboardimg12=createImg('assets/sprite.jpg');
 	billboardimg12.hide();
+
+	// Setting the background color to black
 	background(0);
+
+	// Loading the current minute
 	const curr_mins = minute();
+
+	// Creating instances of ParticleItems for the two sets of confetti particles
 	particles_item = new ParticleItems(createVector(100,350));
 	particles_item2 = new ParticleItems(createVector(450,350));
 
+	// Populating hour_x_arr and hour_y_arr with the x and y coordinates of the pink dots representing the current hour
 	for (let idx=0; idx<24;idx++){
 		append(hour_x_arr,random(115,190))
 		append(hour_y_arr,random(630,780))
 	}
 
+	// Populating min_x_arr and min_y_arr with the x and y coordinates of the green dots representing the current minute
 	for (let idx=0; idx<60;idx++){
 		append(min_x_arr,random(340,410))
 		append(min_y_arr,random(580,710))
@@ -67,41 +76,54 @@ function setup() {
 function draw(){
 	background(0);
 
+	// Displaying a short text description of the abstract clock
 	textSize(12);
 	fill(215);
 	noStroke();
 	text('Clock #2		UNI: pc3019 By: Preethi Chandirasekeran', 600,30);
 	text('This abstract clock is based on the ball drop', 600,70);
-	text('in Times Square. The number of pink dots correspond', 600,90);
-	text('to the current hour and the number of green dots  ', 600,110);
-	text('correspond to the current minute. The ball dropping ', 600,130);
-	text('corresponds to the current second such that when the', 600,150);
-	text('ball reaches the bottom, 60 seconds have completed', 600,170);
+	text('in Times Square. There are several buildings with ', 600,90);
+	text('billboard advertisements. The number of pink dots  ', 600,110);
+	
+	text('correspond to the current hour and the number of   ', 600,130);
+	text('green dots correspond to the current minute.  ', 600,150);
+	text('The ball dropping corresponds to the current second ', 600,170);
+	text('such that when the ball reaches the bottom, 60 seconds ', 600,190);
+	text('have completed', 600,210);
+	
 	fill(92, 255, 231);
 	noStroke();
 	
-	text('Press the mouse button for a few seconds to ', 600,210);
-	text('create confetti particles ', 600,230);
-	text('Move the mouse to change the design of the ball in ', 600,270);
-	text('the ball drop', 600,290);
+	text('Press the mouse button for a few seconds to ', 600,250);
+	text('create confetti particles ', 600,270);
+	text('Move the mouse to change the design of the ball in ', 600,310);
+	text('the ball drop', 600,330);
 
 	
 	stroke(0);
 	fill(255);
+	// Creating a rectangle shape for one of the buildings
 	shape1=rect(100,900,110,-400)
 	fill(240, 181, 255);
 	
+	// Obtaining the current minute and hour values
 	const mins = minute();
 	const myhours = hour();
+
+	// Logging the current minute to the console each time the minute changes
 	if(curr_mins != mins){
 		curr_mins=mins;
 		console.log(curr_mins);
 	}
+
+	// Displaying the pink dots which represent the current hour
 	for(let idx =0; idx<myhours; idx++){
 		
 		shape14=ellipse(hour_x_arr[idx],hour_y_arr[idx],30,30);
 	}
 	fill(255);
+
+	// Displaying buildings and adding billboard images on each building
 	shape2=rect(0,900,80,-250);
 	image(billboardimg1,100,500,110,100)
 	image(billboardimg2,100,800,110,100)
@@ -112,13 +134,15 @@ function draw(){
 	image(billboardimg4,0,650,80,100)
 	shape4=rect(320,900,110,-450)
 	fill(166, 237, 204);
+
+	// Displaying the green dots which represent the current minute
 	for(let idx =0; idx<mins; idx++){
 		
 		shape15=ellipse(min_x_arr[idx],min_y_arr[idx],15,15);
 	}
 	
 	fill(255);
-	
+	// Displaying the remaining buildings and adding billboard images on each building
 	image(billboardimg5,320,730,110,170)
 	image(billboardimg7,320,450,110,100)
 	shape5=rect(440,900,60,-300)
@@ -131,7 +155,7 @@ function draw(){
 	image(billboardimg12,510,500,75,150)
 	
 	
-
+	// Displaying confetti particles if the mouse is pressed
 	if (mouseIsPressed == true){
 	particles_item.addParticle();
 	particles_item2.addParticle();
@@ -140,19 +164,23 @@ function draw(){
 	particles_item2.run();
 	}
 
+	// Displaying an image of the manhattan skyline at the top of the page
 	image(myimg,0,0,590,332);
 	noStroke();
 	fill(255);
 	textSize(20);
 	
+	// Obtaining the current seconds value
 	const secs = second();
+
+	// Obtaining the height of the ball drop according to the current seconds value
 	let ball_h_secs = 5*(60-secs); 
 	
+
+	// Displaying the ball drop representing the current seconds value
 	noStroke();
 	fill(235,235,255);
 	rect(260,900,20,-300);
-	
-
 
 	x_val = 270;
 	y_val= 900-ball_h_secs;
